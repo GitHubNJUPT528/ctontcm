@@ -1,0 +1,88 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+		    "path" : "pages/aboutUser/login/login",
+		    "style" : {
+				"navigationBarTitleText":"登录"
+			}
+		},
+		{
+		    "path" : "pages/mine/mine",
+		    "style" : {
+				"navigationBarTitleText":"我的"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "ctontcm",
+				"h5":{
+					"pullToRefresh":{
+						"color":"#FA8623"
+					}
+				}
+			}
+		} 
+        ,{
+            "path" : "pages/matchCargoCenter/matchCargoCenter",
+            "style" : {
+				"navigationBarTitleText":"配货大厅"
+			}
+        }
+        ,{
+            "path" : "pages/todaysCargos/todaysCargos",
+            "style" : {
+				"navigationBarTitleText":"当日货源"
+			}
+        }
+        ,{
+            "path" : "pages/service/service",
+            "style" : {
+				"navigationBarTitleText":"服务"
+			}
+        }
+       
+        ,{
+            "path" : "pages/aboutUser/registered/registered",
+            "style" : {
+				"navigationBarTitleText":"注册"
+			}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "ctontcm",
+		"navigationBarBackgroundColor": "#FA8623",
+		"backgroundColor": "#FA8623"
+	},
+	"tabBar": {
+		"color": "#767676",
+		"selectedColor": "#FA8623",
+		"list": [
+			{
+				"pagePath": "pages/matchCargoCenter/matchCargoCenter",
+				"iconPath": "static/imgs/gongwenjia.png",
+				"selectedIconPath": "static/imgs/gongwenjia.png",
+				"text": "配货大厅"
+			},
+			{
+				"pagePath": "pages/todaysCargos/todaysCargos",
+				"iconPath": "static/imgs/huiyuan.png",
+				"selectedIconPath": "static/imgs/huiyuan.png",
+				"text": "当天货源"
+			},
+			{
+				"pagePath": "pages/service/service",
+				"iconPath": "static/imgs/shuju.png",
+				"selectedIconPath": "static/imgs/shuju.png",
+				"text": "服务"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"iconPath": "static/imgs/wode.png",
+				"selectedIconPath": "static/imgs/wode.png",
+				"text": "我的"
+			}
+		]
+	}
+}
