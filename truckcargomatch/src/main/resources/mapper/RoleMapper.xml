@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cton.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.cton.model.Role">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_id, `name`, description, `status`, create_time, update_time
+  </sql>
+  <select id="selectRoleNameByRoleId" resultType="String">
+    select
+      name
+    from u_role
+    where role_id = #{roleId}
+  </select>
+
+  <!-- 删除角色的所有权限 -->
+  <delete id="deleteRoleAllPermsByRoleId">
+    delete from u_role_permission where role_id=#{roleId}
+  </delete>
+
+  <!--删除角色的某个权限-->
+  <delete id="deleteRolePermByPermIdAndRoleId">
+    delete from u_role_permission
+    where
+          role_id=#{roleId}
+    and
+          permission_id=#{permId}
+  </delete>
+
+  <!-- 删除用户的某个角色 -->
+  <delete id="deleteRoleUserByUserIdAndRoleId">
+    delete from u_user_role
+    where
+          role_id=#{roleId}
+    and
+          user_id=#{userId}
+  </delete>
+
+  <!-- 根据角色ID查询当前角色拥有的所有的权限ID -->
+  <select id="selectPermsIdsByRoleId" resultType="arraylist">
+    select permission_id from u_role_permission where role_id=#{roleId}
+  </select>
+
+  <!-- 保存角色和菜单权限之间的关系 -->
+  <insert id="saveRolePerms">
+    insert into u_role_permission(role_id,permission_id) values(#{roleId},#{permId})
+  </insert>
+
+  <!-- 根据用户ID删除用户所有角色数据 -->
+  <delete id="deleteUserAllRolesByUserId">
+    delete from u_user_role where user_id =#{userId}
+  </delete>
+
+  <!-- 查询当前用户拥有的角色ID集合 -->
+  <select id="selectUserAllRolesByUserId" resultType="arraylist">
+    select role_id from u_user_role where user_id=#{userId}
+  </select>
+
+  <!-- 保存角色和用户的关系 -->
+  <insert id="insertUserRole">
+    insert into u_user_role(user_id,role_id) values(#{userId},#{roleId})
+  </insert>
+
+
+
+
+  <select id="selectRoleById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from u_role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectRoleByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from u_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteRoleById" parameterType="java.lang.Integer">
+    delete from u_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteRoleByRoleId" parameterType="java.lang.Integer">
+    delete from u_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="insertRoleSelective" keyColumn="id" keyProperty="id" parameterType="com.cton.model.Role" useGeneratedKeys="true">
+    insert into u_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateRoleByIdSelective" parameterType="com.cton.model.Role">
+    update u_role
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+</mapper>
