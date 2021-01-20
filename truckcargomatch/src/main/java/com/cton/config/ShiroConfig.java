@@ -35,9 +35,10 @@ public class ShiroConfig {
         map.put("/user/**","anon");//anon 设置为公共资源
         map.put("/register","anon");
         map.put("/cton/**","anon");
+        map.put("/index/**","authc");
         map.put("/**","anon");//authc 请求这个资源需要认证和授权
         //默认认证界面路径
-        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl("/user/loginview");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }

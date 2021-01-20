@@ -1,23 +1,24 @@
 package com.cton.service.perms;
 
+import com.cton.constants.ResultDTO;
 import com.cton.model.Permission;
 
 import java.util.List;
 
 public interface PermsService {
 
-    String selectPermNameByPermId(Integer permId);
+    ResultDTO selectPermNameByPermId(Integer permId);
 
-    Permission selectPermissionById(Integer id);
+    ResultDTO selectPermissionById(Integer id);
 
-    Permission selectPermissionByPermId(Integer permId);
+    ResultDTO selectPermissionByPermName(String permname);
 
-    int deletePermissionById(Integer id);
+    ResultDTO deletePermissionById(Integer id);
 
-    int deletePermissionByPermId(Integer permId);
+    ResultDTO deletePermissionByPermName(String permname);
 
-    int insertPermissionSelective(Permission permission);
+    ResultDTO insertPermissionSelective(Permission permission);
 
-    int updatePermissionByIdSelective(Permission permission);
+    ResultDTO updatePermissionByIdSelective(Permission permission);
 
 }

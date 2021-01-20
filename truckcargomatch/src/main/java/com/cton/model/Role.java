@@ -6,21 +6,16 @@ import lombok.Data;
 
 /**
  * u_role
- * @author 
+ * @author
  */
 @Data
 public class Role implements Serializable {
     private Integer id;
 
     /**
-     * 角色id
-     */
-    private String roleId;
-
-    /**
      * 角色名称
      */
-    private String name;
+    private String rolename;
 
     /**
      * 角色描述

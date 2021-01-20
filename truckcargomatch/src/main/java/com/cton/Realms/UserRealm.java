@@ -1,9 +1,9 @@
 package com.cton.Realms;
 
+import com.cton.mapper.PermissionMapper;
 import com.cton.mapper.RoleMapper;
+import com.cton.mapper.UserMapper;
 import com.cton.model.User;
-import com.cton.service.perms.PermsService;
-import com.cton.service.user.UserService;
 import com.cton.shiro.MyByteSource;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -22,10 +22,10 @@ import java.util.List;
 public class UserRealm extends AuthorizingRealm {
 
     @Autowired
-    private UserService userService;
+    private UserMapper userMapper;
 
     @Autowired
-    private PermsService permsService;
+    private PermissionMapper permissionMapper;
 
     @Autowired
     private RoleMapper roleMapper;
@@ -44,8 +44,10 @@ public class UserRealm extends AuthorizingRealm {
 
         System.out.println("进入了授权");
 
-        Integer userId = userService.selectUserIdByUserName(primaryPrincipal);
+        Integer userId = userMapper.selectUserIdByUserName(primaryPrincipal);
+        System.out.println("userid："+userId);
         List roleIds = roleMapper.selectUserAllRolesByUserId(userId);
+        System.out.println("roleids："+roleIds);
 
         //授权角色信息
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -56,7 +58,7 @@ public class UserRealm extends AuthorizingRealm {
                 List permIds = roleMapper.selectPermsIdsByRoleId((Integer) roleId);
                 if (!CollectionUtils.isEmpty(permIds)){
                     permIds.forEach(permId -> {
-                        simpleAuthorizationInfo.addStringPermission(permsService.selectPermNameByPermId((Integer) permId));
+                        simpleAuthorizationInfo.addStringPermission(permissionMapper.selectPermNameByPermId((Integer) permId));
                     });
                 }
             });
@@ -70,12 +72,10 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
-        System.out.println("进入了认证");
         //在token中获取用户名
         String principal = (String) authenticationToken.getPrincipal();
         //根据身份信息使用jdbc mybatis查询相关数据库
-        int userId = userService.selectUserIdByUserName(principal);
-        User user = userService.selectUserByUserId(userId);
+        User user = userMapper.selectUserByUserName(principal);
         if (!ObjectUtils.isEmpty(user)){
             return new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),new MyByteSource(user.getSalt()), this.getName());
         }

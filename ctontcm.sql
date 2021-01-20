@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2021-01-17 13:39:10
+Date: 2021-01-20 17:34:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -816,8 +816,7 @@ INSERT INTO `u_driver` VALUES ('45', '18881404312', 'e10adc3949ba59abbe56e057f20
 DROP TABLE IF EXISTS `u_permission`;
 CREATE TABLE `u_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `permission_id` int(20) NOT NULL COMMENT '权限id',
-  `name` varchar(100) NOT NULL COMMENT '权限名称',
+  `permname` varchar(100) NOT NULL COMMENT '权限名称',
   `description` varchar(255) DEFAULT NULL COMMENT '权限描述',
   `url` varchar(255) DEFAULT NULL COMMENT '权限访问路径',
   `perms` varchar(255) DEFAULT NULL COMMENT '权限标识',
@@ -834,10 +833,10 @@ CREATE TABLE `u_permission` (
 -- ----------------------------
 -- Records of u_permission
 -- ----------------------------
-INSERT INTO `u_permission` VALUES ('1', '2001', '添加货物', null, null, 'addCargo', null, null, '0', null, '1', null, null);
-INSERT INTO `u_permission` VALUES ('2', '2002', '删除货物', null, null, 'delCargo', null, null, '0', null, '1', null, null);
-INSERT INTO `u_permission` VALUES ('3', '2003', '添加公司', null, null, 'addCompany', null, null, '0', null, '1', null, null);
-INSERT INTO `u_permission` VALUES ('4', '2004', '删除公司', null, null, 'delCompany', null, null, '0', null, '1', null, null);
+INSERT INTO `u_permission` VALUES ('1', '添加货物', null, null, 'addCargo', null, null, '0', null, '1', null, null);
+INSERT INTO `u_permission` VALUES ('2', '删除货物', null, null, 'delCargo', null, null, '0', null, '1', null, null);
+INSERT INTO `u_permission` VALUES ('3', '添加公司', null, null, 'addCompany', null, null, '0', null, '1', null, null);
+INSERT INTO `u_permission` VALUES ('4', '删除公司', null, null, 'delCompany', null, null, '0', null, '1', null, null);
 
 -- ----------------------------
 -- Table structure for u_role
@@ -845,8 +844,7 @@ INSERT INTO `u_permission` VALUES ('4', '2004', '删除公司', null, null, 'del
 DROP TABLE IF EXISTS `u_role`;
 CREATE TABLE `u_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_id` int(20) NOT NULL COMMENT '角色id',
-  `name` varchar(50) NOT NULL COMMENT '角色名称',
+  `rolename` varchar(50) NOT NULL COMMENT '角色名称',
   `description` varchar(255) DEFAULT NULL COMMENT '角色描述',
   `status` int(1) NOT NULL COMMENT '状态：1有效；2删除',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -857,9 +855,9 @@ CREATE TABLE `u_role` (
 -- ----------------------------
 -- Records of u_role
 -- ----------------------------
-INSERT INTO `u_role` VALUES ('1', '1', 'driver', '司机', '1', null, null);
-INSERT INTO `u_role` VALUES ('2', '2', 'company', '公司', '1', null, null);
-INSERT INTO `u_role` VALUES ('3', '3', 'admin', '管理员', '1', null, null);
+INSERT INTO `u_role` VALUES ('1', 'driver', '司机', '1', null, null);
+INSERT INTO `u_role` VALUES ('2', 'company', '公司', '1', null, null);
+INSERT INTO `u_role` VALUES ('3', 'admin', '管理员', '1', null, null);
 
 -- ----------------------------
 -- Table structure for u_role_permission
@@ -875,19 +873,19 @@ CREATE TABLE `u_role_permission` (
 -- ----------------------------
 -- Records of u_role_permission
 -- ----------------------------
-INSERT INTO `u_role_permission` VALUES ('1', '1001', '2001');
-INSERT INTO `u_role_permission` VALUES ('2', '1001', '2002');
-INSERT INTO `u_role_permission` VALUES ('3', '1001', '2003');
-INSERT INTO `u_role_permission` VALUES ('4', '1001', '2004');
-INSERT INTO `u_role_permission` VALUES ('5', '1002', '2001');
-INSERT INTO `u_role_permission` VALUES ('6', '1002', '2002');
-INSERT INTO `u_role_permission` VALUES ('7', '1002', '2003');
-INSERT INTO `u_role_permission` VALUES ('8', '1002', '2004');
-INSERT INTO `u_role_permission` VALUES ('9', '1003', '2001');
-INSERT INTO `u_role_permission` VALUES ('10', '1003', '2002');
-INSERT INTO `u_role_permission` VALUES ('11', '1003', '2003');
-INSERT INTO `u_role_permission` VALUES ('12', '1003', '2004');
-INSERT INTO `u_role_permission` VALUES ('13', '1004', '2001');
+INSERT INTO `u_role_permission` VALUES ('1', '1', '1');
+INSERT INTO `u_role_permission` VALUES ('2', '1', '2');
+INSERT INTO `u_role_permission` VALUES ('3', '1', '3');
+INSERT INTO `u_role_permission` VALUES ('4', '1', '4');
+INSERT INTO `u_role_permission` VALUES ('5', '2', '1');
+INSERT INTO `u_role_permission` VALUES ('6', '3', '2');
+INSERT INTO `u_role_permission` VALUES ('7', '2', '3');
+INSERT INTO `u_role_permission` VALUES ('8', '2', '4');
+INSERT INTO `u_role_permission` VALUES ('9', '3', '1');
+INSERT INTO `u_role_permission` VALUES ('10', '3', '2');
+INSERT INTO `u_role_permission` VALUES ('11', '3', '3');
+INSERT INTO `u_role_permission` VALUES ('12', '3', '4');
+INSERT INTO `u_role_permission` VALUES ('13', '4', '1');
 
 -- ----------------------------
 -- Table structure for u_user
@@ -895,7 +893,6 @@ INSERT INTO `u_role_permission` VALUES ('13', '1004', '2001');
 DROP TABLE IF EXISTS `u_user`;
 CREATE TABLE `u_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(20) NOT NULL COMMENT '用户id',
   `username` varchar(50) NOT NULL COMMENT '用户名',
   `password` varchar(50) NOT NULL,
   `salt` varchar(128) DEFAULT NULL COMMENT '加密盐值',
@@ -903,22 +900,23 @@ CREATE TABLE `u_user` (
   `phone` varchar(50) DEFAULT NULL COMMENT '联系方式',
   `sex` int(255) DEFAULT NULL COMMENT '年龄：1男2女',
   `age` int(3) DEFAULT NULL COMMENT '年龄',
-  `status` int(1) NOT NULL COMMENT '用户状态：1有效; 2删除',
+  `status` int(1) NOT NULL DEFAULT '1' COMMENT '用户状态：1有效; 2删除',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `last_login_time` datetime DEFAULT NULL COMMENT '最后登录时间',
   `tmp1` varchar(255) DEFAULT NULL COMMENT '临时字段1',
   `tmp2` varchar(255) DEFAULT NULL COMMENT '临时字段2',
-  PRIMARY KEY (`id`,`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of u_user
 -- ----------------------------
-INSERT INTO `u_user` VALUES ('1', '1001', 'admin1', '0f776d546c09a76070847e383b1058ff', 'DpfK)r*I', '11', null, null, null, '1', null, null, null, null, null);
-INSERT INTO `u_user` VALUES ('2', '1002', 'admin2', '881179c1152109e71cc284c1b22dd117', 'OnkM1%%O', '11', null, null, null, '1', null, null, null, null, null);
-INSERT INTO `u_user` VALUES ('3', '1003', 'admin3', 'bca50e18ccdbb9ceb82fc97fb938b640', '*j*)Z@aL', '11', null, null, null, '1', null, null, null, null, null);
-INSERT INTO `u_user` VALUES ('4', '1004', 'test', 'e10adc3949ba59abbe56e057f20f883e', null, '11', null, null, null, '1', null, null, null, null, null);
+INSERT INTO `u_user` VALUES ('1', 'admin1', '0f776d546c09a76070847e383b1058ff', 'DpfK)r*I', '11', null, null, null, '1', null, null, null, null, null);
+INSERT INTO `u_user` VALUES ('2', 'admin2', '881179c1152109e71cc284c1b22dd117', 'OnkM1%%O', '11', null, null, null, '1', null, null, null, null, null);
+INSERT INTO `u_user` VALUES ('3', 'admin3', 'bca50e18ccdbb9ceb82fc97fb938b640', '*j*)Z@aL', '11', null, null, null, '1', null, null, null, null, null);
+INSERT INTO `u_user` VALUES ('4', 'test', 'bca50e18ccdbb9ceb82fc97fb938b640', '*j*)Z@aL', '', null, null, null, '1', null, null, null, null, null);
+INSERT INTO `u_user` VALUES ('5', 'test2', '536eed82bcdf079860122ff5cea40c99', 'ntwz7@(x', null, null, null, null, '1', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for u_user_role
@@ -929,12 +927,13 @@ CREATE TABLE `u_user_role` (
   `user_id` int(20) NOT NULL COMMENT '用户id',
   `role_id` int(20) NOT NULL COMMENT '角色id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of u_user_role
 -- ----------------------------
-INSERT INTO `u_user_role` VALUES ('1', '1001', '3');
-INSERT INTO `u_user_role` VALUES ('2', '1002', '3');
-INSERT INTO `u_user_role` VALUES ('3', '1003', '3');
-INSERT INTO `u_user_role` VALUES ('4', '1004', '2');
+INSERT INTO `u_user_role` VALUES ('1', '1', '3');
+INSERT INTO `u_user_role` VALUES ('2', '2', '3');
+INSERT INTO `u_user_role` VALUES ('3', '3', '3');
+INSERT INTO `u_user_role` VALUES ('4', '4', '1');
+INSERT INTO `u_user_role` VALUES ('5', '1', '2');

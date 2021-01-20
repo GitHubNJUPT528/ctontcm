@@ -3,8 +3,7 @@
 <mapper namespace="com.cton.mapper.PermissionMapper">
   <resultMap id="BaseResultMap" type="com.cton.model.Permission">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="permission_id" jdbcType="VARCHAR" property="permId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="permname" jdbcType="VARCHAR" property="permname" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="perms" jdbcType="VARCHAR" property="perms" />
@@ -17,7 +16,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, permission_id, `name`, description, url, perms, parent_id, `type`, order_num,
+    id, `name`, description, url, perms, parent_id, `type`, order_num,
     icon, `status`, create_time, update_time
   </sql>
 
@@ -25,7 +24,7 @@
     select
       name
     from u_permission
-    where permission_id = #{permId}
+    where id = #{permId}
   </select>
 
 
@@ -37,11 +36,11 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="selectPermissionByPermId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectPermissionByPermName" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from u_permission
-    where permission_id = #{permId,jdbcType=INTEGER}
+    where permname = #{permname}
   </select>
 
   <delete id="deletePermissionById" parameterType="java.lang.Integer">
@@ -49,17 +48,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <delete id="deletePermissionByPermId" parameterType="java.lang.Integer">
+  <delete id="deletePermissionByPermName">
     delete from u_permission
-    where permission_id = #{permId,jdbcType=INTEGER}
+    where permname = #{permname}
   </delete>
 
   <insert id="insertPermissionSelective" keyColumn="id" keyProperty="id" parameterType="com.cton.model.Permission" useGeneratedKeys="true">
     insert into u_permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="permissionId != null">
-        permission_id,
-      </if>
       <if test="name != null">
         `name`,
       </if>
@@ -95,9 +91,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="permissionId != null">
-        #{permissionId,jdbcType=VARCHAR},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
@@ -136,9 +129,6 @@
   <update id="updatePermissionByIdSelective" parameterType="com.cton.model.Permission">
     update u_permission
     <set>
-      <if test="permissionId != null">
-        permission_id = #{permissionId,jdbcType=VARCHAR},
-      </if>
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>

@@ -1,40 +1,41 @@
 package com.cton.service.role;
 
+import com.cton.constants.ResultDTO;
 import com.cton.model.Role;
 
 import java.util.List;
 
 public interface RoleService {
 
-    String selectRoleNameByRoleId(Integer roleId);
+    ResultDTO selectRoleNameByRoleId(Integer roleId);
 
-    int deleteRoleAllPermsByRoleId(Integer roleId);
+    ResultDTO deleteRoleAllPermsByRoleId(Integer roleId);
 
-    int deleteRolePermByPermIdAndRoleId(Integer permId,Integer roleId);
+    ResultDTO deleteRolePermByPermIdAndRoleId(Integer permId,Integer roleId);
 
-    int deleteRoleUserByUserIdAndRoleId(Integer userId,Integer roleId);
+    ResultDTO deleteRoleUserByUserIdAndRoleId(Integer userId,Integer roleId);
 
-    List selectPermsIdsByRoleId(Integer roleId);
+    ResultDTO selectPermsIdsByRoleId(Integer roleId);
 
-    int saveRolePerms(Integer roleId, Integer permId);
+    ResultDTO saveRolePerms(Integer roleId, Integer permId);
 
-    int deleteUserAllRolesByUserId(Integer userId);
+    ResultDTO deleteUserAllRolesByUserId(Integer userId);
 
-    List selectUserAllRolesByUserId(Integer userId);
+    ResultDTO selectUserAllRolesByUserId(Integer userId);
 
-    int insertUserRole(Integer userId, Integer roleId);
+    ResultDTO insertUserRole(Integer userId, Integer roleId);
 
-    Role selectRoleById(Integer id);
+    ResultDTO selectRoleById(Integer id);
 
-    Role selectRoleByRoleId(Integer roleId);
+    ResultDTO selectRoleByRoleName(String rolename);
 
-    int deleteRoleById(Integer id);
+    ResultDTO deleteRoleById(Integer id);
 
-    int deleteRoleByRoleId(Integer roleId);
+    ResultDTO deleteRoleByRoleName(String rolename);
 
-    int insertRoleSelective(Role role);
+    ResultDTO insertRoleSelective(Role role);
 
-    int updateRoleByIdSelective(Role role);
+    ResultDTO updateRoleByIdSelective(Role role);
 
 
 }

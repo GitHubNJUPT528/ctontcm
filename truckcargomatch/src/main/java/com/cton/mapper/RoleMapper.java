@@ -9,32 +9,32 @@ import java.util.List;
 public interface RoleMapper {
     String selectRoleNameByRoleId(Integer roleId);
 
-    int deleteRoleAllPermsByRoleId(Integer roleId);
+    Integer deleteRoleAllPermsByRoleId(Integer roleId);
 
-    int deleteRolePermByPermIdAndRoleId(Integer permId,Integer roleId);
+    Integer deleteRolePermByPermIdAndRoleId(Integer permId,Integer roleId);
 
-    int deleteRoleUserByUserIdAndRoleId(Integer userId,Integer roleId);
+    Integer deleteRoleUserByUserIdAndRoleId(Integer userId,Integer roleId);
 
     List selectPermsIdsByRoleId(Integer roleId);
 
-    int saveRolePerms(Integer roleId, Integer permId);
+    Integer saveRolePerms(Integer roleId, Integer permId);
 
-    int deleteUserAllRolesByUserId(Integer userId);
+    Integer deleteUserAllRolesByUserId(Integer userId);
 
     List selectUserAllRolesByUserId(Integer userId);
 
-    int insertUserRole(Integer userId, Integer roleId);
+    Integer insertUserRole(Integer userId, Integer roleId);
 
     Role selectRoleById(Integer id);
 
-    Role selectRoleByRoleId(Integer roleId);
+    Role selectRoleByRoleName(String rolename);
 
-    int deleteRoleById(Integer id);
+    Integer deleteRoleById(Integer id);
 
-    int deleteRoleByRoleId(Integer roleId);
+    Integer deleteRoleByRoleName(String rolename);
 
-    int insertRoleSelective(Role role);
+    Integer insertRoleSelective(Role role);
 
-    int updateRoleByIdSelective(Role role);
+    Integer updateRoleByIdSelective(Role role);
 
 }

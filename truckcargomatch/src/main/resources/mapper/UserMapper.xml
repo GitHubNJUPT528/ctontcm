@@ -3,7 +3,6 @@
 <mapper namespace="com.cton.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.cton.model.User">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <id column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
@@ -19,12 +18,12 @@
     <result column="tmp2" jdbcType="VARCHAR" property="tmp2" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, username, `password`, salt, email, phone, sex, age, `status`, create_time,
+    id, username, `password`, salt, email, phone, sex, age, `status`, create_time,
     update_time, last_login_time, tmp1, tmp2
   </sql>
   <select id="selectUserIdByUserName" resultType="Integer">
     select
-      user_id
+      id
     from u_user
     where username = #{username}
   </select>
@@ -37,11 +36,11 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="selectUserByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectUserByUserName" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from u_user
-    where user_id = #{userId,jdbcType=INTEGER}
+    where username = #{username}
   </select>
 
   <delete id="deleteUserById" parameterType="java.lang.Integer">
@@ -49,9 +48,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <delete id="deleteUserByUserId" parameterType="java.lang.Integer">
+  <delete id="deleteUserByUserName" parameterType="java.lang.Integer">
     delete from u_user
-    where user_id = #{userId,jdbcType=INTEGER}
+    where username = #{username}
   </delete>
 
 
@@ -61,9 +60,6 @@
   <insert id="insertUserSelective" keyColumn="id" keyProperty="id" parameterType="com.cton.model.User" useGeneratedKeys="true">
     insert into u_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        user_id,
-      </if>
       <if test="username != null">
         username,
       </if>
@@ -105,9 +101,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
-      </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
@@ -149,7 +142,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByUserIdSelective" parameterType="com.cton.model.User">
+  <update id="updateByIdSelective" parameterType="com.cton.model.User">
     update u_user
     <set>
       <if test="username != null">
@@ -193,7 +186,8 @@
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
-      and user_id = #{userId}
+      and id = #{id}
   </update>
+
 
 </mapper>

@@ -4,7 +4,7 @@ package com.cton.utils;
 import java.util.Random;
 
 public class SaltUtils {
-    //生成salt的静态方法
+    //生成salt的静态方法 n位数
     public static String getSalt(int n){
         char[] chars = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm0123456789!@#$%^&*()".toCharArray();
         StringBuilder sb = new StringBuilder();

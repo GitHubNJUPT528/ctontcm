@@ -1,21 +1,25 @@
 package com.cton.service.user;
 
+import com.cton.constants.ResultDTO;
 import com.cton.model.User;
 
 public interface UserService {
-    int selectUserIdByUserName(String username);
+    ResultDTO selectUserIdByUserName(String username);
 
-    int insertUserSelective(User user);
+    ResultDTO insertUserSelective(User user);
 
-    int updateByUserIdSelective(User user);
+    ResultDTO updateByUserIdSelective(User user);
 
-    User selectUserById(Integer id);
+    ResultDTO selectUserById(Integer id);
 
-    User selectUserByUserId(Integer userId);
+    ResultDTO selectUserByUserName(String username);
 
-    int deleteUserById(Integer id);
+    ResultDTO deleteUserById(Integer id);
 
-    int deleteUserByUserId(Integer userId);
+    ResultDTO deleteUserByUserName(String username);
+
+    //注册用户
+    ResultDTO register(User user);
 
 
 }

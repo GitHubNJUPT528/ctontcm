@@ -5,18 +5,18 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-    int selectUserIdByUserName(String username);
+    Integer selectUserIdByUserName(String username);
 
-    int insertUserSelective(User user);
+    Integer insertUserSelective(User user);
 
-    int updateByUserIdSelective(User user);
+    Integer updateByUserIdSelective(User user);
 
     User selectUserById(Integer id);
 
-    User selectUserByUserId(Integer userId);
+    User selectUserByUserName(String username);
 
-    int deleteUserById(Integer id);
+    Integer deleteUserById(Integer id);
 
-    int deleteUserByUserId(Integer userId);
+    Integer deleteUserByUserName(String username);
 
 }

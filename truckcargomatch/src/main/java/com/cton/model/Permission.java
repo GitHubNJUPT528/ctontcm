@@ -12,15 +12,11 @@ import lombok.Data;
 public class Permission implements Serializable {
     private Integer id;
 
-    /**
-     * 权限id
-     */
-    private String permId;
 
     /**
      * 权限名称
      */
-    private String name;
+    private String permname;
 
     /**
      * 权限描述

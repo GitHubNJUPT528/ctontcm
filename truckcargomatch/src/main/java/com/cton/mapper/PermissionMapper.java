@@ -9,13 +9,13 @@ public interface PermissionMapper {
 
     Permission selectPermissionById(Integer id);
 
-    Permission selectPermissionByPermId(Integer permId);
+    Permission selectPermissionByPermName(String permname);
 
-    int deletePermissionById(Integer id);
+    Integer deletePermissionById(Integer id);
 
-    int deletePermissionByPermId(Integer permId);
+    Integer deletePermissionByPermName(String permName);
 
-    int insertPermissionSelective(Permission permission);
+    Integer insertPermissionSelective(Permission permission);
 
-    int updatePermissionByIdSelective(Permission permission);
+    Integer updatePermissionByIdSelective(Permission permission);
 }

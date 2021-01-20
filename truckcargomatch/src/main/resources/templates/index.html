@@ -42,7 +42,7 @@
 			<!--如果未登录-->
 			<!--<div shiro:authorize="!isAuthenticated()">-->
 			<div shiro:notAuthenticated="">
-				<a class="item" th:href="@{/toLoginPage}">
+				<a class="item" th:href="@{/user/Loginview}">
 					<i class="address card icon"></i> 登录
 				</a>
 			</div>
@@ -67,40 +67,21 @@
 	<div class="ui stackable three column grid">
 		<div class="column" shiro:hasAnyRoles="admin,driver"><!--有其中任一一个角色课访问-->
 			<div class="ui raised segments">
-				<div class="ui segment">
-					<a th:href="@{/levelA/a}">L-A-a</a>
-				</div>
-				<div class="ui segment">
-					<a th:href="@{/levelA/b}">L-A-b</a>
-				</div>
-				<div class="ui segment">
-					<a th:href="@{/levelA/c}">L-A-c</a>
-				</div>
+				sssss admin,driver ssssss
 			</div>
 		</div>
 		<div class="column" shiro:hasAnyRoles="admin">
 			<div class="ui raised segments">
 				<div class="ui segment">
-					<a th:href="@{/levelB/a}">L-B-a</a>
+					ddddddd  admin  dddddddd
 				</div>
-				<div class="ui segment">
-					<a th:href="@{/levelB/b}">L-B-b</a>
-				</div>
-				<div class="ui segment">
-					<a th:href="@{/levelB/c}">L-B-c</a>
-				</div>
+
 			</div>
 		</div>
 		<div class="column" shiro:hasRole="driver">
 			<div class="ui raised segments">
 				<div class="ui segment">
-					<a th:href="@{/levelC/a}">L-C-a</a>
-				</div>
-				<div class="ui segment">
-					<a th:href="@{/levelC/b}">L-C-b</a>
-				</div>
-				<div class="ui segment">
-					<a th:href="@{/levelC/c}">L-C-c</a>
+				sssss driver ssssss
 				</div>
 			</div>
 		</div>
@@ -132,9 +113,7 @@
 					以爱之名 你还愿意吗<br/>
 				</p>
 			</div>
-			<div class="column">
-				<img class="ui medium circular image" src="images/001.jpg">
-			</div>
+
 		</div>
 
 	</div>
