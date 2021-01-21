@@ -2,17 +2,22 @@ package com.cton.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
  * u_user
- * @author 
+ * @author
  */
 @Data
+@ApiModel(value = "User对象",description = "用户对象") //需要注意必须在controller中关联实体类 才能在文档中显示
 public class User extends UserKey implements Serializable {
     /**
      * 用户名
      */
+    @ApiModelProperty("用户名")
     private String username;
 
     private String password;

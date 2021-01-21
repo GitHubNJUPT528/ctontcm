@@ -2,12 +2,12 @@ package com.cton.web.user;
 
 
 import com.cton.constants.ResultDTO;
-import com.cton.enums.HttpCode;
-import com.cton.mapper.RoleMapper;
 import com.cton.model.User;
 import com.cton.service.user.UserService;
 import com.cton.utils.UUIDUtils;
 import com.cton.utils.VerifyCodeUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -17,18 +17,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 
 @RequestMapping("/user")
 @Controller
+@Api(value = "系统用户模块",tags = "系统用户接口")
 public class UserController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -36,10 +35,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RoleMapper roleMapper;
-
-    @RequestMapping("/test")
+    @PostMapping("/test")
     @ResponseBody
     public String test(){
         return UUIDUtils.buildId("1");
@@ -47,7 +43,8 @@ public class UserController {
     }
 
 
-    @RequestMapping("/login")
+    @ApiOperation(value = "登录",notes = "用户登录")
+    @PostMapping("/login")
     public String login(String username,String password,String code,HttpSession session){
 
 
@@ -82,8 +79,9 @@ public class UserController {
     }
 
     //用户注册
-    @RequestMapping("/register")
-    public String register(User user){
+    @ApiOperation(value = "注册",notes = "用户注册")
+    @PostMapping("/register")
+    public String register(@RequestBody User user){
         try {
             ResultDTO resultDTO = userService.register(user);
             if (resultDTO.getCode() == 1001) //注册成功
@@ -97,36 +95,41 @@ public class UserController {
     }
 
     //跳转到register请求
-    @RequestMapping("/registerview")
+    @ApiOperation(value = "注册导航",notes = "跳转到用户注册页面")
+    @PostMapping("/registerview")
     public String register(){
         System.out.println("跳转到register.html");
         return "register";
     }
 
     //跳转到login请求
-    @RequestMapping("/loginview")
+    @ApiOperation(value = "登录导航",notes = "跳转到用户登录页面")
+    @PostMapping("/loginview")
     public String login(){
         System.out.println("跳转到login.html");
         return "login";
     }
 
-    //跳转到register请求
-    @RequestMapping("/successview")
+    //跳转到success
+    @ApiOperation(value = "登录成功导航",notes = "跳转到success页面")
+    @PostMapping("/successview")
     public String success(){
         System.out.println("跳转到success.html");
         return "success";
     }
 
-    //跳转到register请求
-    @RequestMapping("/failview")
+    //跳转到fail
+    @ApiOperation(value = "登录失败导航",notes = "跳转到fail页面")
+    @PostMapping("/failview")
     public String fail(){
         System.out.println("fail.html");
         return "fail";
     }
 
 
-    //跳转到register请求
-    @RequestMapping("/failcodeview")
+    //跳转到failcode
+    @ApiOperation(value = "验证码错误导航",notes = "跳转到验证码错误页面")
+    @PostMapping("/failcodeview")
     public String failCode(){
         System.out.println("failcode.html");
         return "failcode";
@@ -138,7 +141,8 @@ public class UserController {
      * @param response
      * @throws IOException
      */
-    @RequestMapping("/getImage")
+    @ApiOperation(value = "获取验证码",notes = "获取验证码")
+    @GetMapping("/getImage")
     public void getImage(HttpSession session, HttpServletResponse response) throws IOException {
         //生成验证码
         String code = VerifyCodeUtils.generateVerifyCode(4);
