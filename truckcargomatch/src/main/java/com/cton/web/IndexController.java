@@ -18,4 +18,33 @@ public class IndexController {
         System.out.println("跳转到index.html");
         return "index";
     }
+
+
+    /**
+     * 分页查询两种写法     用到时可参考
+     */
+//    public PageInfo  findItemByPage(Map<String,Object> queryMap,int currentPage,int pageSize) {
+//
+//        PageHelper.startPage(currentPage, pageSize);
+//        List<Item> itemsList = itemMapper.findItem(queryMap); //查询商品
+//
+//        PageInfo info=new PageInfo(itemsList);//1、PageInfo 是 pagehelper中内值的分页的信息类
+//
+//        System.out.println(info.getTotal());//总条数
+//        System.out.println(info.getList());//显示的数据
+//
+//        return info;  // 返回值是 PageInfo
+//    }
+//
+//    public PageBean<Item> findItemByPage(Map<String,Object> queryMap,int currentPage,int pageSize) {
+//
+//        PageHelper.startPage(currentPage, pageSize);
+//        List<Item> itemsList = itemMapper.findItem(queryMap); //查询商品
+//
+//        // 2、也可以自定义分页信息
+//        int countNums = itemService.countItem(queryMap);      //总记录数
+//        PageBean<Item> pageData = new PageBean<>(currentPage, pageSize, countNums);
+//        pageData.setItems(itemsList);
+//        return pageData.getItems();  // 返回值是 PageBean<Item>
+//    }
 }

@@ -27,6 +27,7 @@ import java.io.IOException;
 
 @RequestMapping("/user")
 @Controller
+@CrossOrigin
 @Api(value = "系统用户模块",tags = "系统用户接口")
 public class UserController {
 

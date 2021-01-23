@@ -4,6 +4,7 @@ import com.cton.constants.ResultDTO;
 import com.cton.enums.HttpCode;
 import com.cton.mapper.UserMapper;
 import com.cton.model.User;
+import com.cton.utils.ResultUtil;
 import com.cton.utils.SaltUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
@@ -25,9 +26,9 @@ public class UserServiceImpl implements UserService {
 
         int returnNumber = userMapper.selectUserIdByUserName(username);
         if(returnNumber<=0){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"根据用户名查找用户ID失败");
+            return ResultUtil.error(HttpCode.FAIL.getCode(),"根据用户名查找用户ID失败");
         }else{
-            return new ResultDTO(HttpCode.SUCCESS.getCode(),"根据用户名查找用户ID成功",returnNumber);
+            return ResultUtil.success("根据用户名查找用户ID成功",returnNumber);
         }
     }
 
@@ -36,9 +37,9 @@ public class UserServiceImpl implements UserService {
 
         int returnNumber =  userMapper.insertUserSelective(user);
         if(returnNumber<=0){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"新增用户失败");
+            return ResultUtil.error(HttpCode.FAIL.getCode(),"新增用户失败");
         }else{
-            return new ResultDTO(HttpCode.SUCCESS.getCode(),"新增用户成功成功");
+            return ResultUtil.success("新增用户成功");
         }
     }
 
@@ -47,9 +48,9 @@ public class UserServiceImpl implements UserService {
     public ResultDTO updateByUserIdSelective(User user){
         int returnNumber = userMapper.updateByUserIdSelective(user);
         if(returnNumber<=0){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"根据用户ID更新用户失败");
+            return ResultUtil.error(HttpCode.FAIL.getCode(),"根据用户ID更新用户失败");
         }else{
-            return new ResultDTO(HttpCode.SUCCESS.getCode(),"根据用户ID更新用户成功");
+            return ResultUtil.success("根据用户ID更新用户成功");
         }
     }
 
@@ -58,9 +59,9 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.selectUserById(id);
         if(null == user){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"根据主键ID查找用户失败");
+            return ResultUtil.error(HttpCode.FAIL.getCode(),"根据主键ID查找用户失败");
         }else{
-            return new ResultDTO(HttpCode.SUCCESS.getCode(),"根据主键ID查找用户成功",user);
+            return ResultUtil.success("根据主键ID查找用户成功",user);
         }
     }
 
@@ -68,9 +69,9 @@ public class UserServiceImpl implements UserService {
     public ResultDTO selectUserByUserName(String username) {
         User user = userMapper.selectUserByUserName(username);
         if(null == user){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"根据用户ID查找用户失败");
+            return ResultUtil.error(HttpCode.FAIL.getCode(),"根据用户ID查找用户失败");
         }else{
-            return new ResultDTO(HttpCode.SUCCESS.getCode(),"根据用户ID查找用户成功",user);
+            return ResultUtil.success("根据用户ID查找用户成功",user);
         }
     }
 
@@ -79,9 +80,9 @@ public class UserServiceImpl implements UserService {
 
         int returnNumber = userMapper.deleteUserById(id);
         if(returnNumber<=0){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"根据主键ID删除用户失败");
+            return ResultUtil.error(HttpCode.FAIL.getCode(),"根据主键ID删除用户失败");
         }else{
-            return new ResultDTO(HttpCode.SUCCESS.getCode(),"根据主键ID删除用户成功");
+            return ResultUtil.success("根据主键ID删除用户成功");
         }
     }
 
@@ -89,9 +90,9 @@ public class UserServiceImpl implements UserService {
     public ResultDTO deleteUserByUserName(String username) {
         int returnNumber = userMapper.deleteUserByUserName(username);
         if(returnNumber<=0){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"根据用户ID删除用户失败");
+            return ResultUtil.error(HttpCode.FAIL.getCode(),"根据用户ID删除用户失败");
         }else{
-            return new ResultDTO(HttpCode.SUCCESS.getCode(),"根据用户ID删除用户成功");
+            return ResultUtil.success("根据用户ID删除用户成功");
         }
     }
 
@@ -103,7 +104,7 @@ public class UserServiceImpl implements UserService {
          */
         String registerUserName = user.getUsername();
         if(null != userMapper.selectUserIdByUserName(registerUserName))
-            return new ResultDTO(HttpCode.FAIL.getCode(),"用户名重复");
+            return ResultUtil.error(HttpCode.FAIL.getCode(),"用户名重复");
         else{
             //处理业务调用Mapper
             //1.生成随机盐
@@ -114,7 +115,7 @@ public class UserServiceImpl implements UserService {
             Md5Hash md5Hash = new Md5Hash(user.getPassword(), salt, 1024);
             user.setPassword(md5Hash.toHex());
             userMapper.insertUserSelective(user);
-            return new ResultDTO(HttpCode.SUCCESS.getCode(),"注册成功");
+            return ResultUtil.success("注册成功");
         }
     }
 
