@@ -74,7 +74,6 @@
 			logBtoClick:function(e){
 				var phone = this.phone
 				var password = this.password
-				console.log(phone+password)
 				if(!(phone && password))
 				{
 					uni.showModal({
@@ -83,90 +82,96 @@
 					});
 					return;
 				}
-				uni.request({
-				            url: '/yto/consignor/login',
-				            method:"POST",
-				            // header : {'content-type':'application/x-www-form-urlencoded'},
-							header : {'content-type':'application/json'},
-				            data: {
-				                phone: phone,
-				                password: password
-				            },
+				else {
+					console.log('账号'+phone+'密码'+password)
+					uni.switchTab({
+					    url: '/pages/mine/mine'
+					});
+				}
+				// uni.request({
+				//             url: '/yto/consignor/login',
+				//             method:"POST",
+				//             // header : {'content-type':'application/x-www-form-urlencoded'},
+				// 			header : {'content-type':'application/json'},
+				//             data: {
+				//                 phone: phone,
+				//                 password: password
+				//             },
 				            
-				            success: (res) => {
-								console.log(res.data);
-				                 if (e.statusCode !== 200) {
-				                    uni.showModal({
-				                        content: "请求失败，请重试!!!",
-				                        showCancel: false,
-				                    });
-				                    // return;
-				                }
-								if(res.data.code == 200)
-								{
-									uni.setStorage({
-										key: 'phone',
-										data: phone,
-										success() {
-											console.log('缓存成功了')
-										},
-										fail() {
-											console.log('缓存失败了')
-										}
-									});
-									console.log(res.data.data);
-									uni.setStorage({
-										key: 'username',
-										data: res.data.data.username,
-										success() {
-											console.log('username缓存成功了')
-										},
-										fail() {
-											console.log('username缓存失败了')
-										}
-									});
-									uni.setStorage({
-										key: 'id',
-										data: res.data.data.id,
-										success() {
-											console.log('id缓存成功了')
-										},
-										fail() {
-											console.log('id缓存失败了')
-										}
-									});
-									uni.setStorage({
-										key: 'realName',
-										data: res.data.data.realName,
-										success() {
-											console.log('id缓存成功了')
-										},
-										fail() {
-											console.log('id缓存失败了')
-										}
-									});
-									wx.switchTab({
-										url:'../index/index'
-									})
-								}
-								else{
-									console.log(res.data);
-									uni.showModal({
-									    content: "用户名或密码错误",
-									    showCancel: false,								
-									});
-								}
-				            },
-				            fail: (e) => {
-				                uni.showModal({
-				                    content: "请求失败，请重试！",
-				                    showCancel: false
-				                })
-				            },
-				            complete: () => {
-				                this.loading = false;
-				            }
-				        })
+				//             success: (res) => {
+				// 				console.log(res.data);
+				//                  if (e.statusCode !== 200) {
+				//                     uni.showModal({
+				//                         content: "请求失败，请重试!!!",
+				//                         showCancel: false,
+				//                     });
+				//                     // return;
+				//                 }
+				// 				if(res.data.code == 200)
+				// 				{
+				// 					uni.setStorage({
+				// 						key: 'phone',
+				// 						data: phone,
+				// 						success() {
+				// 							console.log('缓存成功了')
+				// 						},
+				// 						fail() {
+				// 							console.log('缓存失败了')
+				// 						}
+				// 					});
+				// 					console.log(res.data.data);
+				// 					uni.setStorage({
+				// 						key: 'username',
+				// 						data: res.data.data.username,
+				// 						success() {
+				// 							console.log('username缓存成功了')
+				// 						},
+				// 						fail() {
+				// 							console.log('username缓存失败了')
+				// 						}
+				// 					});
+				// 					uni.setStorage({
+				// 						key: 'id',
+				// 						data: res.data.data.id,
+				// 						success() {
+				// 							console.log('id缓存成功了')
+				// 						},
+				// 						fail() {
+				// 							console.log('id缓存失败了')
+				// 						}
+				// 					});
+				// 					uni.setStorage({
+				// 						key: 'realName',
+				// 						data: res.data.data.realName,
+				// 						success() {
+				// 							console.log('id缓存成功了')
+				// 						},
+				// 						fail() {
+				// 							console.log('id缓存失败了')
+				// 						}
+				// 					});
+				// 					wx.switchTab({
+				// 						url:'../index/index'
+				// 					})
+				// 				}
+				// 				else{
+				// 					console.log(res.data);
+				// 					uni.showModal({
+				// 					    content: "用户名或密码错误",
+				// 					    showCancel: false,								
+				// 					});
+				// 				}
+				//             },
+				//             fail: (e) => {
+				//                 uni.showModal({
+				//                     content: "请求失败，请重试！",
+				//                     showCancel: false
+				//                 })
+				//             },
+				//             complete: () => {
+				//                 this.loading = false;
+				//             }
+				//         })
 				    },
 				     // ...mapMutations(['login'])
 		
