@@ -68,3 +68,9 @@ server:
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.cton.model
+
+alioss:
+  endpoint: https://oss-cn-shanghai.aliyuncs.com
+  AccessKeyId: LTAI4G9oZXTrsP8N3xSJmPgJ
+  AccessKeySecret: pIZairK0JZeU9MIp0VjedMySMLluNb
+  bucketName: ctontcm222
