@@ -16,13 +16,13 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `name`, description, url, perms, parent_id, `type`, order_num,
+    id, `permname`, description, url, perms, parent_id, `type`, order_num,
     icon, `status`, create_time, update_time
   </sql>
 
   <select id="selectPermNameByPermId" resultType="String">
     select
-      name
+      permname
     from u_permission
     where id = #{permId}
   </select>
@@ -56,8 +56,8 @@
   <insert id="insertPermissionSelective" keyColumn="id" keyProperty="id" parameterType="com.cton.model.Permission" useGeneratedKeys="true">
     insert into u_permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        `name`,
+      <if test="permname != null">
+        `permname`,
       </if>
       <if test="description != null">
         description,
@@ -91,8 +91,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="permname != null">
+        #{permname,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
@@ -129,8 +129,8 @@
   <update id="updatePermissionByIdSelective" parameterType="com.cton.model.Permission">
     update u_permission
     <set>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
+      <if test="permname != null">
+        `permname` = #{permname,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},

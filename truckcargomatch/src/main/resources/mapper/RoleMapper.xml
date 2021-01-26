@@ -3,18 +3,18 @@
 <mapper namespace="com.cton.mapper.RoleMapper">
   <resultMap id="BaseResultMap" type="com.cton.model.Role">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="rolename" />
+    <result column="rolename" jdbcType="VARCHAR" property="rolename" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `name`, description, `status`, create_time, update_time
+    id, `rolename`, description, `status`, create_time, update_time
   </sql>
   <select id="selectRoleNameByRoleId" resultType="String">
     select
-      name
+      rolename
     from u_role
     where id = #{roleId}
   </select>
@@ -81,7 +81,7 @@
     select
     <include refid="Base_Column_List" />
     from u_role
-    where name = #{rolename}
+    where rolename = #{rolename}
   </select>
 
   <delete id="deleteRoleById" parameterType="java.lang.Integer">
@@ -91,15 +91,15 @@
 
   <delete id="deleteRoleByRoleName">
     delete from u_role
-    where name = #{rolename}
+    where rolename = #{rolename}
   </delete>
 
 
   <insert id="insertRoleSelective" keyColumn="id" keyProperty="id" parameterType="com.cton.model.Role" useGeneratedKeys="true">
     insert into u_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        `name`,
+      <if test="rolename != null">
+        `rolename`,
       </if>
       <if test="description != null">
         description,
@@ -115,8 +115,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="rolename != null">
+        #{rolename,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
@@ -135,8 +135,8 @@
   <update id="updateRoleByIdSelective" parameterType="com.cton.model.Role">
     update u_role
     <set>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
+      <if test="rolename != null">
+        `rolename` = #{rolename,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
