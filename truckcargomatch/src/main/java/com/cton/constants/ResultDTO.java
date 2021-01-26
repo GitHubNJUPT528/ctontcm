@@ -15,6 +15,8 @@ public class ResultDTO {
 
     private Object data;
 
+    public ResultDTO(){};
+
     public ResultDTO(int code, String msg) {
         this.system="cton";
         this.code = code;

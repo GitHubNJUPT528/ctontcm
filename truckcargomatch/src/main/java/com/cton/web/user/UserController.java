@@ -36,7 +36,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/test")
+    @GetMapping("/test")
     @ResponseBody
     public String test(){
         return UUIDUtils.buildId("1");
@@ -46,7 +46,7 @@ public class UserController {
 
     @ApiOperation(value = "登录",notes = "用户登录")
     @PostMapping("/login")
-    public String login(String username,String password,String code,HttpSession session){
+    public String login(@RequestParam String username,@RequestParam String password,String code,HttpSession session){
 
 
         //比较验证码
@@ -97,7 +97,7 @@ public class UserController {
 
     //跳转到register请求
     @ApiOperation(value = "注册导航",notes = "跳转到用户注册页面")
-    @PostMapping("/registerview")
+    @GetMapping("/registerview")
     public String register(){
         System.out.println("跳转到register.html");
         return "register";
@@ -105,7 +105,7 @@ public class UserController {
 
     //跳转到login请求
     @ApiOperation(value = "登录导航",notes = "跳转到用户登录页面")
-    @PostMapping("/loginview")
+    @GetMapping("/loginview")
     public String login(){
         System.out.println("跳转到login.html");
         return "login";
@@ -113,7 +113,7 @@ public class UserController {
 
     //跳转到success
     @ApiOperation(value = "登录成功导航",notes = "跳转到success页面")
-    @PostMapping("/successview")
+    @GetMapping("/successview")
     public String success(){
         System.out.println("跳转到success.html");
         return "success";
@@ -121,7 +121,7 @@ public class UserController {
 
     //跳转到fail
     @ApiOperation(value = "登录失败导航",notes = "跳转到fail页面")
-    @PostMapping("/failview")
+    @GetMapping("/failview")
     public String fail(){
         System.out.println("fail.html");
         return "fail";
@@ -130,7 +130,7 @@ public class UserController {
 
     //跳转到failcode
     @ApiOperation(value = "验证码错误导航",notes = "跳转到验证码错误页面")
-    @PostMapping("/failcodeview")
+    @GetMapping("/failcodeview")
     public String failCode(){
         System.out.println("failcode.html");
         return "failcode";

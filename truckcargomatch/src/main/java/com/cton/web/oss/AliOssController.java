@@ -3,6 +3,7 @@ package com.cton.web.oss;
 import com.cton.constants.ResultDTO;
 import com.cton.enums.HttpCode;
 import com.cton.service.oss.AliOssService;
+import com.cton.utils.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class AliOssController {
     @PostMapping("/uploadImgFile")
     public ResultDTO uploadImgFile(MultipartFile file){
         String upload = aliOssService.upload(file);
-        return new ResultDTO(HttpCode.SUCCESS.getCode(),upload);
+        return ResultUtil.success(upload);
 
     }
 
@@ -37,10 +38,10 @@ public class AliOssController {
         try {
             String[] split = fileUrl.split(".com/");
             aliOssService.deleteFile(split[1]);
-            return new ResultDTO(HttpCode.FAIL.getCode(),"删除成功");
+            return ResultUtil.success("删除成功");
         } catch (Exception e) {
             logger.info("删除失败",e);
-            return new ResultDTO(HttpCode.SUCCESS.getCode(), "删除失败");
+            return ResultUtil.error(HttpCode.FAIL.getCode(), "删除失败");
         }
     }
 }
