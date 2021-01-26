@@ -89,7 +89,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <delete id="deleteRoleByRoleName" parameterType="java.lang.Integer">
+  <delete id="deleteRoleByRoleName">
     delete from u_role
     where name = #{rolename}
   </delete>

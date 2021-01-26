@@ -36,7 +36,7 @@ public class ShiroConfig {
         map.put("/register","anon");
         map.put("/cton/**","anon");
         map.put("/index/**","authc");
-        map.put("/**","anon");//authc 请求这个资源需要认证和授权
+        map.put("/**","authc");//authc 请求这个资源需要认证和授权
         //默认认证界面路径
         shiroFilterFactoryBean.setLoginUrl("/user/loginview");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);

@@ -36,7 +36,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="selectUserByUserName" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectUserByUserName" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from u_user
@@ -48,7 +48,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <delete id="deleteUserByUserName" parameterType="java.lang.Integer">
+  <delete id="deleteUserByUserName">
     delete from u_user
     where username = #{username}
   </delete>

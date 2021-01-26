@@ -114,7 +114,7 @@ public class AliOssServiceImpl implements AliOssService, InitializingBean {
             objectMetadata.setObjectAcl(CannedAccessControlList.PublicRead);
             objectMetadata.setContentType(getcontentType(fileType));
 
-            //每次上传得到的名字肯定是不相同的，在java种怎么让每次生成的名字不相同
+            //每次上传得到的名字肯定是不相同的，在java中怎么让每次生成的名字不相同
             //uuid Reidis是分布式 雪花算法 zookeeper分布式  使用uuid 文件格式yyyy/MM/dd+uuid
 
             ossClient.putObject(bucketName, fileName, inputStream,objectMetadata);
