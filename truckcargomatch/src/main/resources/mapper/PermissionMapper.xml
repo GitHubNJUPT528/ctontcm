@@ -20,6 +20,26 @@
     icon, `status`, create_time, update_time
   </sql>
 
+  <!--查询所有权限-->
+  <select id="listAllPerms" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from u_permission
+  </select>
+
+  <!--模糊查询权限-->
+  <select id="listAllPermsByKeyword" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from u_permission
+    where
+        type = #{type}
+    and
+        permname like CONCAT('%',#{nameKeyword},'%')
+    and
+        url like CONCAT('%',#{urlKeyword},'%')
+  </select>
+
   <select id="selectPermNameByPermId" resultType="String">
     select
       permname

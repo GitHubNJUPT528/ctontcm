@@ -1,25 +1,32 @@
 package com.cton.service.user;
 
 import com.cton.constants.ResultDTO;
+import com.cton.model.Role;
 import com.cton.model.User;
+import com.cton.utils.PageBean;
+
+import java.util.List;
 
 public interface UserService {
-    ResultDTO selectUserIdByUserName(String username);
+    Integer selectUserIdByUserName(String username);
 
-    ResultDTO insertUserSelective(User user);
+    Integer insertUserSelective(User user);
 
-    ResultDTO updateByUserIdSelective(User user);
+    Integer updateByUserIdSelective(User user);
 
-    ResultDTO selectUserById(Integer id);
+    User selectUserById(Integer id);
 
-    ResultDTO selectUserByUserName(String username);
+    User selectUserByUserName(String username);
 
-    ResultDTO deleteUserById(Integer id);
+    Integer deleteUserById(Integer id);
 
-    ResultDTO deleteUserByUserName(String username);
+    Integer deleteUserByUserName(String username);
 
     //注册用户
-    ResultDTO register(User user);
+    Integer register(User user);
 
+    List<User> listAllUsers();
+
+    PageBean<User> listAllUsersByKeyword(String keyword, Integer pageSize, Integer currentPage);
 
 }

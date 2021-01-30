@@ -32,11 +32,13 @@ public class ShiroConfig {
         //配置系统受限资源
         //配置系统公共系统
         Map<String,String> map = new HashMap<String,String>();
+        map.put("/doc.html","anon");
+        map.put("/service-worker.js","anon");
+        map.put("/swagger-resources","anon");
         map.put("/user/**","anon");//anon 设置为公共资源
-        map.put("/register","anon");
         map.put("/cton/**","anon");
-        map.put("/index/**","authc");
-        map.put("/**","authc");//authc 请求这个资源需要认证和授权
+//        map.put("/index/**","authc");
+//        map.put("/**","authc");//authc 请求这个资源需要认证和授权
         //默认认证界面路径
         shiroFilterFactoryBean.setLoginUrl("/user/loginview");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);

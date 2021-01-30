@@ -2,23 +2,28 @@ package com.cton.service.perms;
 
 import com.cton.constants.ResultDTO;
 import com.cton.model.Permission;
+import com.cton.utils.PageBean;
 
 import java.util.List;
 
 public interface PermsService {
 
-    ResultDTO selectPermNameByPermId(Integer permId);
+    List<Permission> listAllPerms();
 
-    ResultDTO selectPermissionById(Integer id);
+    PageBean<Permission> listAllPermsByKeyword(Integer type, String nameKeyword, String urlKeyword, Integer pageSize, Integer currentPage);
 
-    ResultDTO selectPermissionByPermName(String permname);
+    String selectPermNameByPermId(Integer permId);
 
-    ResultDTO deletePermissionById(Integer id);
+    Permission selectPermissionById(Integer id);
 
-    ResultDTO deletePermissionByPermName(String permname);
+    Permission selectPermissionByPermName(String permname);
 
-    ResultDTO insertPermissionSelective(Permission permission);
+    Integer deletePermissionById(Integer id);
 
-    ResultDTO updatePermissionByIdSelective(Permission permission);
+    Integer deletePermissionByPermName(String permname);
+
+    Integer insertPermissionSelective(Permission permission);
+
+    Integer updatePermissionByIdSelective(Permission permission);
 
 }

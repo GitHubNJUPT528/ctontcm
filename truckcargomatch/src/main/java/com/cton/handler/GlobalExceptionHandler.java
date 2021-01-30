@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     public ResultDTO error(BusinessException e){
-        logger.info("系统异常",e);
+        logger.info(e.getErrMsg(),e);
         return ResultUtil.error(e.getCode(),e.getErrMsg());
     }
 

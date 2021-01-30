@@ -45,6 +45,6 @@ public class IndexController {
 //        int countNums = itemService.countItem(queryMap);      //总记录数
 //        PageBean<Item> pageData = new PageBean<>(currentPage, pageSize, countNums);
 //        pageData.setItems(itemsList);
-//        return pageData.getItems();  // 返回值是 PageBean<Item>
+//        return pageData;  // 返回值是 PageBean<Item>
 //    }
 }

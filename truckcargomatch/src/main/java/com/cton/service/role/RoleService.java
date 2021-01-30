@@ -2,40 +2,48 @@ package com.cton.service.role;
 
 import com.cton.constants.ResultDTO;
 import com.cton.model.Role;
+import com.cton.utils.PageBean;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 
 public interface RoleService {
+    Integer createRole(Role role);
 
-    ResultDTO selectRoleNameByRoleId(Integer roleId);
+    Integer updateRoleByIdSelective(Role role);
 
-    ResultDTO deleteRoleAllPermsByRoleId(Integer roleId);
+    List<Role> listAllRoles();
 
-    ResultDTO deleteRolePermByPermIdAndRoleId(Integer permId,Integer roleId);
+    PageBean<Role> listAllRolesByKeyword(String keyword, Integer pageSize, Integer currentPage);
 
-    ResultDTO deleteRoleUserByUserIdAndRoleId(Integer userId,Integer roleId);
+    String selectRoleNameByRoleId(Integer roleId);
 
-    ResultDTO selectPermsIdsByRoleId(Integer roleId);
+    Integer deleteRoleAllPermsByRoleId(Integer roleId);
 
-    ResultDTO saveRolePerms(Integer roleId, Integer permId);
+    Integer deleteRolePermByPermIdAndRoleId(Integer permId,Integer roleId);
 
-    ResultDTO deleteUserAllRolesByUserId(Integer userId);
+    Integer deleteRoleUserByUserIdAndRoleId(Integer userId,Integer roleId);
 
-    ResultDTO selectUserAllRolesByUserId(Integer userId);
+    List<Integer> selectPermsIdsByRoleId(Integer roleId);
 
-    ResultDTO insertUserRole(Integer userId, Integer roleId);
+    Integer saveRolePerms(Integer roleId, Integer permId);
 
-    ResultDTO selectRoleById(Integer id);
+    Integer deleteUserAllRolesByUserId(Integer userId);
 
-    ResultDTO selectRoleByRoleName(String rolename);
+    List<Integer> selectUserAllRolesByUserId(Integer userId);
 
-    ResultDTO deleteRoleById(Integer id);
+    Integer insertUserRole(Integer userId, Integer roleId);
 
-    ResultDTO deleteRoleByRoleName(String rolename);
+    Role selectRoleById(Integer id);
 
-    ResultDTO insertRoleSelective(Role role);
+    Role selectRoleByRoleName(String rolename);
 
-    ResultDTO updateRoleByIdSelective(Role role);
+    Integer deleteRoleById(Integer id);
 
+    Integer deleteRoleByRoleName(String rolename);
+
+    Integer deleteBatch(List<Integer> roleIds);
+
+    Integer allocPermission(Integer roleId, List<Integer> permissionIds);
 
 }

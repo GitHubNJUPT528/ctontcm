@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cton.mapper.TruckMapper">
+  <resultMap id="BaseResultMap" type="com.cton.model.Truck">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="truck_type" jdbcType="VARCHAR" property="truckType" />
+    <result column="truck_volume" jdbcType="DOUBLE" property="truckVolume" />
+    <result column="truck_load" jdbcType="DOUBLE" property="truckLoad" />
+    <result column="fuel_litersPerHundredMiles" jdbcType="DOUBLE" property="fuelLitersperhundredmiles" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, truck_type, truck_volume, truck_load, fuel_litersPerHundredMiles
+  </sql>
+
+  <!--查询所有货车-->
+  <select id="listAllTrucks" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from t_truck
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_truck
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_truck
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cton.model.Truck" useGeneratedKeys="true">
+    insert into t_truck
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="truckType != null">
+        truck_type,
+      </if>
+      <if test="truckVolume != null">
+        truck_volume,
+      </if>
+      <if test="truckLoad != null">
+        truck_load,
+      </if>
+      <if test="fuelLitersperhundredmiles != null">
+        fuel_litersPerHundredMiles,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="truckType != null">
+        #{truckType,jdbcType=VARCHAR},
+      </if>
+      <if test="truckVolume != null">
+        #{truckVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="truckLoad != null">
+        #{truckLoad,jdbcType=DOUBLE},
+      </if>
+      <if test="fuelLitersperhundredmiles != null">
+        #{fuelLitersperhundredmiles,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cton.model.Truck">
+    update t_truck
+    <set>
+      <if test="truckType != null">
+        truck_type = #{truckType,jdbcType=VARCHAR},
+      </if>
+      <if test="truckVolume != null">
+        truck_volume = #{truckVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="truckLoad != null">
+        truck_load = #{truckLoad,jdbcType=DOUBLE},
+      </if>
+      <if test="fuelLitersperhundredmiles != null">
+        fuel_litersPerHundredMiles = #{fuelLitersperhundredmiles,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
