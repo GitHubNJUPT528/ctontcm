@@ -25,6 +25,7 @@ import java.util.List;
  * 后台用户角色管理Controller
  */
 @Controller
+@CrossOrigin
 @Api(value = "系统角色模块",tags = "系统角色接口")
 @RequestMapping("/role")
 public class RoleController {

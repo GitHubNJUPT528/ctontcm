@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cton.mapper.CargoMapper">
+  <resultMap id="BaseResultMap" type="com.cton.model.Cargo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cargo_id" jdbcType="BIGINT" property="cargoId" />
+    <result column="sender_id" jdbcType="VARCHAR" property="senderId" />
+    <result column="sender_name" jdbcType="VARCHAR" property="senderName" />
+    <result column="sender_phone" jdbcType="VARCHAR" property="senderPhone" />
+    <result column="origin" jdbcType="VARCHAR" property="origin" />
+    <result column="destination" jdbcType="VARCHAR" property="destination" />
+    <result column="network_id" jdbcType="INTEGER" property="networkId" />
+    <result column="detailed_origin" jdbcType="VARCHAR" property="detailedOrigin" />
+    <result column="detailed_origin_longitude" jdbcType="DOUBLE" property="detailedOriginLongitude" />
+    <result column="detailed_origin_latitude" jdbcType="DOUBLE" property="detailedOriginLatitude" />
+    <result column="detailed_destination" jdbcType="VARCHAR" property="detailedDestination" />
+    <result column="detailed_destination_longitude" jdbcType="DOUBLE" property="detailedDestinationLongitude" />
+    <result column="detailed_destination_latitude" jdbcType="DOUBLE" property="detailedDestinationLatitude" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="is_cargo_taking" jdbcType="BOOLEAN" property="isCargoTaking" />
+    <result column="mass" jdbcType="FLOAT" property="mass" />
+    <result column="length" jdbcType="DOUBLE" property="length" />
+    <result column="width" jdbcType="DOUBLE" property="width" />
+    <result column="hight" jdbcType="DOUBLE" property="hight" />
+    <result column="volume" jdbcType="FLOAT" property="volume" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="cargo_description" jdbcType="VARCHAR" property="cargoDescription" />
+    <result column="completed" jdbcType="BOOLEAN" property="completed" />
+    <result column="grade" jdbcType="FLOAT" property="grade" />
+    <result column="payed" jdbcType="BOOLEAN" property="payed" />
+    <result column="big" jdbcType="BOOLEAN" property="big" />
+    <result column="transportation_record_id" jdbcType="INTEGER" property="transportationRecordId" />
+    <result column="real_price" jdbcType="DOUBLE" property="realPrice" />
+    <result column="current_city" jdbcType="VARCHAR" property="currentCity" />
+    <result column="current_state" jdbcType="INTEGER" property="currentState" />
+    <result column="expected_arrival_time" jdbcType="TIMESTAMP" property="expectedArrivalTime" />
+    <result column="expected_price" jdbcType="INTEGER" property="expectedPrice" />
+    <result column="transportation_center_id" jdbcType="INTEGER" property="transportationCenterId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cargo_id, sender_id, sender_name, sender_phone, origin, destination, network_id,
+    detailed_origin, detailed_origin_longitude, detailed_origin_latitude, detailed_destination,
+    detailed_destination_longitude, detailed_destination_latitude, `type`, is_cargo_taking,
+    mass, `length`, width, hight, volume, price, cargo_description, completed, grade,
+    payed, big, transportation_record_id, real_price, current_city, current_state, expected_arrival_time,
+    expected_price, transportation_center_id
+  </sql>
+
+  <!--查询所有未被接单的货物-->
+  <select id="listCargoNoTaking" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_cargo
+    where is_cargo_taking = 0
+    and completed = 0
+  </select>
+
+  <!--查询所有货物-->
+  <select id="listCargo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_cargo
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_cargo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_cargo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cton.model.Cargo" useGeneratedKeys="true">
+    insert into t_cargo (cargo_id, sender_id, sender_name,
+      sender_phone, origin, destination,
+      network_id, detailed_origin, detailed_origin_longitude,
+      detailed_origin_latitude, detailed_destination,
+      detailed_destination_longitude, detailed_destination_latitude,
+      `type`, is_cargo_taking, mass,
+      `length`, width, hight,
+      volume, price, cargo_description,
+      completed, grade, payed,
+      big, transportation_record_id, real_price,
+      current_city, current_state, expected_arrival_time,
+      expected_price, transportation_center_id)
+    values (#{cargoId,jdbcType=BIGINT}, #{senderId,jdbcType=VARCHAR}, #{senderName,jdbcType=VARCHAR},
+      #{senderPhone,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, #{destination,jdbcType=VARCHAR},
+      #{networkId,jdbcType=INTEGER}, #{detailedOrigin,jdbcType=VARCHAR}, #{detailedOriginLongitude,jdbcType=DOUBLE},
+      #{detailedOriginLatitude,jdbcType=DOUBLE}, #{detailedDestination,jdbcType=VARCHAR},
+      #{detailedDestinationLongitude,jdbcType=DOUBLE}, #{detailedDestinationLatitude,jdbcType=DOUBLE},
+      #{type,jdbcType=INTEGER}, #{isCargoTaking,jdbcType=BOOLEAN}, #{mass,jdbcType=FLOAT},
+      #{length,jdbcType=DOUBLE}, #{width,jdbcType=DOUBLE}, #{hight,jdbcType=DOUBLE},
+      #{volume,jdbcType=FLOAT}, #{price,jdbcType=DOUBLE}, #{cargoDescription,jdbcType=VARCHAR},
+      #{completed,jdbcType=BOOLEAN}, #{grade,jdbcType=FLOAT}, #{payed,jdbcType=BOOLEAN},
+      #{big,jdbcType=BOOLEAN}, #{transportationRecordId,jdbcType=INTEGER}, #{realPrice,jdbcType=DOUBLE},
+      #{currentCity,jdbcType=VARCHAR}, #{currentState,jdbcType=INTEGER}, #{expectedArrivalTime,jdbcType=TIMESTAMP},
+      #{expectedPrice,jdbcType=INTEGER}, #{transportationCenterId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cton.model.Cargo" useGeneratedKeys="true">
+    insert into t_cargo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cargoId != null">
+        cargo_id,
+      </if>
+      <if test="senderId != null">
+        sender_id,
+      </if>
+      <if test="senderName != null">
+        sender_name,
+      </if>
+      <if test="senderPhone != null">
+        sender_phone,
+      </if>
+      <if test="origin != null">
+        origin,
+      </if>
+      <if test="destination != null">
+        destination,
+      </if>
+      <if test="networkId != null">
+        network_id,
+      </if>
+      <if test="detailedOrigin != null">
+        detailed_origin,
+      </if>
+      <if test="detailedOriginLongitude != null">
+        detailed_origin_longitude,
+      </if>
+      <if test="detailedOriginLatitude != null">
+        detailed_origin_latitude,
+      </if>
+      <if test="detailedDestination != null">
+        detailed_destination,
+      </if>
+      <if test="detailedDestinationLongitude != null">
+        detailed_destination_longitude,
+      </if>
+      <if test="detailedDestinationLatitude != null">
+        detailed_destination_latitude,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="isCargoTaking != null">
+        is_cargo_taking,
+      </if>
+      <if test="mass != null">
+        mass,
+      </if>
+      <if test="length != null">
+        `length`,
+      </if>
+      <if test="width != null">
+        width,
+      </if>
+      <if test="hight != null">
+        hight,
+      </if>
+      <if test="volume != null">
+        volume,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="cargoDescription != null">
+        cargo_description,
+      </if>
+      <if test="completed != null">
+        completed,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="payed != null">
+        payed,
+      </if>
+      <if test="big != null">
+        big,
+      </if>
+      <if test="transportationRecordId != null">
+        transportation_record_id,
+      </if>
+      <if test="realPrice != null">
+        real_price,
+      </if>
+      <if test="currentCity != null">
+        current_city,
+      </if>
+      <if test="currentState != null">
+        current_state,
+      </if>
+      <if test="expectedArrivalTime != null">
+        expected_arrival_time,
+      </if>
+      <if test="expectedPrice != null">
+        expected_price,
+      </if>
+      <if test="transportationCenterId != null">
+        transportation_center_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cargoId != null">
+        #{cargoId,jdbcType=BIGINT},
+      </if>
+      <if test="senderId != null">
+        #{senderId,jdbcType=VARCHAR},
+      </if>
+      <if test="senderName != null">
+        #{senderName,jdbcType=VARCHAR},
+      </if>
+      <if test="senderPhone != null">
+        #{senderPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null">
+        #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="destination != null">
+        #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="networkId != null">
+        #{networkId,jdbcType=INTEGER},
+      </if>
+      <if test="detailedOrigin != null">
+        #{detailedOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedOriginLongitude != null">
+        #{detailedOriginLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="detailedOriginLatitude != null">
+        #{detailedOriginLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="detailedDestination != null">
+        #{detailedDestination,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedDestinationLongitude != null">
+        #{detailedDestinationLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="detailedDestinationLatitude != null">
+        #{detailedDestinationLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="isCargoTaking != null">
+        #{isCargoTaking,jdbcType=BOOLEAN},
+      </if>
+      <if test="mass != null">
+        #{mass,jdbcType=FLOAT},
+      </if>
+      <if test="length != null">
+        #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="width != null">
+        #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="hight != null">
+        #{hight,jdbcType=DOUBLE},
+      </if>
+      <if test="volume != null">
+        #{volume,jdbcType=FLOAT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="cargoDescription != null">
+        #{cargoDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="completed != null">
+        #{completed,jdbcType=BOOLEAN},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=FLOAT},
+      </if>
+      <if test="payed != null">
+        #{payed,jdbcType=BOOLEAN},
+      </if>
+      <if test="big != null">
+        #{big,jdbcType=BOOLEAN},
+      </if>
+      <if test="transportationRecordId != null">
+        #{transportationRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="realPrice != null">
+        #{realPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="currentCity != null">
+        #{currentCity,jdbcType=VARCHAR},
+      </if>
+      <if test="currentState != null">
+        #{currentState,jdbcType=INTEGER},
+      </if>
+      <if test="expectedArrivalTime != null">
+        #{expectedArrivalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expectedPrice != null">
+        #{expectedPrice,jdbcType=INTEGER},
+      </if>
+      <if test="transportationCenterId != null">
+        #{transportationCenterId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cton.model.Cargo">
+    update t_cargo
+    <set>
+      <if test="cargoId != null">
+        cargo_id = #{cargoId,jdbcType=BIGINT},
+      </if>
+      <if test="senderId != null">
+        sender_id = #{senderId,jdbcType=VARCHAR},
+      </if>
+      <if test="senderName != null">
+        sender_name = #{senderName,jdbcType=VARCHAR},
+      </if>
+      <if test="senderPhone != null">
+        sender_phone = #{senderPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null">
+        origin = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="destination != null">
+        destination = #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="networkId != null">
+        network_id = #{networkId,jdbcType=INTEGER},
+      </if>
+      <if test="detailedOrigin != null">
+        detailed_origin = #{detailedOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedOriginLongitude != null">
+        detailed_origin_longitude = #{detailedOriginLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="detailedOriginLatitude != null">
+        detailed_origin_latitude = #{detailedOriginLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="detailedDestination != null">
+        detailed_destination = #{detailedDestination,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedDestinationLongitude != null">
+        detailed_destination_longitude = #{detailedDestinationLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="detailedDestinationLatitude != null">
+        detailed_destination_latitude = #{detailedDestinationLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="isCargoTaking != null">
+        is_cargo_taking = #{isCargoTaking,jdbcType=BOOLEAN},
+      </if>
+      <if test="mass != null">
+        mass = #{mass,jdbcType=FLOAT},
+      </if>
+      <if test="length != null">
+        `length` = #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="width != null">
+        width = #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="hight != null">
+        hight = #{hight,jdbcType=DOUBLE},
+      </if>
+      <if test="volume != null">
+        volume = #{volume,jdbcType=FLOAT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="cargoDescription != null">
+        cargo_description = #{cargoDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="completed != null">
+        completed = #{completed,jdbcType=BOOLEAN},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=FLOAT},
+      </if>
+      <if test="payed != null">
+        payed = #{payed,jdbcType=BOOLEAN},
+      </if>
+      <if test="big != null">
+        big = #{big,jdbcType=BOOLEAN},
+      </if>
+      <if test="transportationRecordId != null">
+        transportation_record_id = #{transportationRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="realPrice != null">
+        real_price = #{realPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="currentCity != null">
+        current_city = #{currentCity,jdbcType=VARCHAR},
+      </if>
+      <if test="currentState != null">
+        current_state = #{currentState,jdbcType=INTEGER},
+      </if>
+      <if test="expectedArrivalTime != null">
+        expected_arrival_time = #{expectedArrivalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expectedPrice != null">
+        expected_price = #{expectedPrice,jdbcType=INTEGER},
+      </if>
+      <if test="transportationCenterId != null">
+        transportation_center_id = #{transportationCenterId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cton.model.Cargo">
+    update t_cargo
+    set cargo_id = #{cargoId,jdbcType=BIGINT},
+      sender_id = #{senderId,jdbcType=VARCHAR},
+      sender_name = #{senderName,jdbcType=VARCHAR},
+      sender_phone = #{senderPhone,jdbcType=VARCHAR},
+      origin = #{origin,jdbcType=VARCHAR},
+      destination = #{destination,jdbcType=VARCHAR},
+      network_id = #{networkId,jdbcType=INTEGER},
+      detailed_origin = #{detailedOrigin,jdbcType=VARCHAR},
+      detailed_origin_longitude = #{detailedOriginLongitude,jdbcType=DOUBLE},
+      detailed_origin_latitude = #{detailedOriginLatitude,jdbcType=DOUBLE},
+      detailed_destination = #{detailedDestination,jdbcType=VARCHAR},
+      detailed_destination_longitude = #{detailedDestinationLongitude,jdbcType=DOUBLE},
+      detailed_destination_latitude = #{detailedDestinationLatitude,jdbcType=DOUBLE},
+      `type` = #{type,jdbcType=INTEGER},
+      is_cargo_taking = #{isCargoTaking,jdbcType=BOOLEAN},
+      mass = #{mass,jdbcType=FLOAT},
+      `length` = #{length,jdbcType=DOUBLE},
+      width = #{width,jdbcType=DOUBLE},
+      hight = #{hight,jdbcType=DOUBLE},
+      volume = #{volume,jdbcType=FLOAT},
+      price = #{price,jdbcType=DOUBLE},
+      cargo_description = #{cargoDescription,jdbcType=VARCHAR},
+      completed = #{completed,jdbcType=BOOLEAN},
+      grade = #{grade,jdbcType=FLOAT},
+      payed = #{payed,jdbcType=BOOLEAN},
+      big = #{big,jdbcType=BOOLEAN},
+      transportation_record_id = #{transportationRecordId,jdbcType=INTEGER},
+      real_price = #{realPrice,jdbcType=DOUBLE},
+      current_city = #{currentCity,jdbcType=VARCHAR},
+      current_state = #{currentState,jdbcType=INTEGER},
+      expected_arrival_time = #{expectedArrivalTime,jdbcType=TIMESTAMP},
+      expected_price = #{expectedPrice,jdbcType=INTEGER},
+      transportation_center_id = #{transportationCenterId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

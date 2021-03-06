@@ -24,6 +24,7 @@ import java.util.List;
  * Created by macro on 2020/2/4.
  */
 @Controller
+@CrossOrigin
 @Api(value = "后台权限管理",tags = "后台权限接口")
 @RequestMapping("/permission")
 public class PermissionController {

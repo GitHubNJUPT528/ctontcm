@@ -4,27 +4,29 @@ package com.cton.web.system;
 import com.cton.constants.ResultDTO;
 import com.cton.enums.HttpCode;
 import com.cton.handler.BusinessException;
+import com.cton.model.MatchDTO;
 import com.cton.model.Permission;
 import com.cton.model.Role;
 import com.cton.model.User;
+import com.cton.service.bussiness.TruckCargoMatchingService;
 import com.cton.service.perms.PermsService;
 import com.cton.service.role.RoleService;
 import com.cton.service.user.UserService;
 import com.cton.utils.ResultUtil;
+import com.github.skjolber.packing.Container;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/cton")
 @Api(value = "系统模块",tags = "系统接口")
 public class SystemController {
@@ -39,6 +41,21 @@ public class SystemController {
 
     @Autowired
     private PermsService permsService;
+
+    @Autowired
+    private TruckCargoMatchingService truckCargoMatchingService;
+
+
+    /**
+     * 测试装箱匹配
+     */
+    @ResponseBody
+    @PostMapping("/match")
+    public ResultDTO match(double length, double width, double hight, double tvolume,double tmass) {
+        List<Object> match = truckCargoMatchingService.aaa(length,width,hight,tvolume,tmass);
+
+        return ResultUtil.success("匹配成功",match);
+    }
 
     /**
      * 跳转到登录页面
@@ -97,5 +114,6 @@ public class SystemController {
         else
             throw new BusinessException(HttpCode.DATABASEISNULL.getCode(), HttpCode.DATABASEISNULL.getMsg());
     }
+
 
 }

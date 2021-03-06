@@ -165,6 +165,13 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!--装箱-->
+        <dependency>
+            <groupId>com.github.skjolber.3d-bin-container-packing</groupId>
+            <artifactId>core</artifactId>
+            <version>1.2.13</version>
+        </dependency>
+
     </dependencies>
 
 
