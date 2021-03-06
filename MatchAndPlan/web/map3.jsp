@@ -148,6 +148,7 @@
     map.centerAndZoom('南京市',12);
     map.enableScrollWheelZoom(true);
 
+    //装有BMapGL.Maker对象的数组
     var makerList = [];
     // 江苏省区南京转运中心
     var p0 = new BMapGL.Point(118.81611,31.777821);
@@ -174,7 +175,7 @@
 
 
 
-
+//  只看此两个方法内的ajax请求
     returnLocAndLoadOverlays();
     returnLocAndRtp();
 

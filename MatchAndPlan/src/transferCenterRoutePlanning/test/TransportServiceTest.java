@@ -1,12 +1,11 @@
-package transferCenterRoutePlanning;
+package transferCenterRoutePlanning.test;
 
 import org.junit.Test;
+import transferCenterRoutePlanning.service.Impl.TransportCenterServiceImpl;
+import transferCenterRoutePlanning.service.TransportService;
 import transferCenterRoutePlanning.Util.LatLng;
 
-import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 public class TransportServiceTest {
     private TransportService transportService = new TransportCenterServiceImpl();

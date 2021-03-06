@@ -1,11 +1,12 @@
-package transferCenterRoutePlanning;
+package transferCenterRoutePlanning.Dao.Impl;
 
+import transferCenterRoutePlanning.Dao.BaseDao;
+import transferCenterRoutePlanning.Dao.TransportCenterDao;
 import transferCenterRoutePlanning.Util.TransportCenter;
 
-import java.awt.print.Book;
 import java.util.List;
 
-public class TransportCenterImpl extends BaseDao implements TransportCenterDao{
+public class TransportCenterImpl extends BaseDao implements TransportCenterDao {
     @Override
     public List<TransportCenter> queryTransportCenter() {
         String sql = "select  id  ,  name  ,  city  ,  max_cargo_count  ,  address  ,  latitude  ,  longitude   from transportation_center";

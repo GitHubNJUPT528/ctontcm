@@ -1,4 +1,4 @@
-package transferCenterRoutePlanning;
+package transferCenterRoutePlanning.web;
 
 import transferCenterRoutePlanning.Util.LatLng;
 
@@ -21,7 +21,7 @@ public abstract class BaseServlet extends HttpServlet {
        req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html;charset=utf-8");
         String action =  req.getParameter("action");
-
+         //使用反射解析请求的参数 以唤醒执行对应的方法
             try {
                 Method method = this.getClass().getDeclaredMethod(action,HttpServletRequest.class,HttpServletResponse.class);
                 method.invoke(this,req,resp);

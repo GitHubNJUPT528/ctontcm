@@ -1,16 +1,15 @@
-package transferCenterRoutePlanning;
+package transferCenterRoutePlanning.test;
 
 import com.google.gson.Gson;
 import org.junit.Test;
+import transferCenterRoutePlanning.service.Impl.TransportCenterServiceImpl;
+import transferCenterRoutePlanning.service.TransportService;
 import transferCenterRoutePlanning.Util.LatLng;
 import transferCenterRoutePlanning.Util.RoutePlanByGreey;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 public class ServletTest {
     public TransportService transportService = new TransportCenterServiceImpl();

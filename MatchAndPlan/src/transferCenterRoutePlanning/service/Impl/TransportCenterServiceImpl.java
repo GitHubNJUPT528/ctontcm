@@ -1,8 +1,10 @@
-package transferCenterRoutePlanning;
+package transferCenterRoutePlanning.service.Impl;
 
-import com.google.gson.Gson;
+import transferCenterRoutePlanning.Dao.Impl.TransportCenterImpl;
+import transferCenterRoutePlanning.Dao.TransportCenterDao;
 import transferCenterRoutePlanning.Util.LatLng;
 import transferCenterRoutePlanning.Util.TransportCenter;
+import transferCenterRoutePlanning.service.TransportService;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,6 +14,10 @@ import java.util.Map;
 public class TransportCenterServiceImpl implements TransportService {
     private TransportCenterDao transportCenterDao = new TransportCenterImpl();
 
+    /**
+     * 查询存放所有LatLng对象的List
+     * @return
+     */
     @Override
     public List<LatLng> getLatLngList() {
         List<TransportCenter> centerInfoList = transportCenterDao.queryTransportCenter();
@@ -21,7 +27,10 @@ public class TransportCenterServiceImpl implements TransportService {
         }
         return list;
     }
-
+    /**
+     * 查询存放所有LatLng对象的Map，此map的Key是对应点集的名字
+     * @return
+     */
     @Override
     public Map<String,LatLng> getLatLngMap() {
         List<TransportCenter> centerInfoList = transportCenterDao.queryTransportCenter();

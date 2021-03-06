@@ -1,4 +1,4 @@
-package transferCenterRoutePlanning;
+package transferCenterRoutePlanning.service;
 
 import transferCenterRoutePlanning.Util.LatLng;
 import transferCenterRoutePlanning.Util.TransportCenter;
