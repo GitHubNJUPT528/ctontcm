@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no">
+    <title>浏览器定位</title>
+    <style>
+        html,body,#container{
+            height: 100%;
+            width: 100%;
+            overflow:hidden;
+            margin:0;
+            font-family: "微软雅黑";
+        }
+    </style>
+    <script src="http://api.map.baidu.com/api?type=webgl&v=1.0&ak=9iAk4XnzsGNHk2VZP75CiaoR0R7oCt05"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/javascript">
+
+
+
+    var map = new BMapGL.Map("container");
+
+
+    map.enableScrollWheelZoom(true);
+
+    // var geolocation = new BMapGL.Geolocation({
+    //     enableHighAccuracy: true, //是否使用高精度定位，默认:true
+    //     timeout: 10000, //超过10秒后停止定位，默认：无穷大
+    //     maximumAge: 0, //定位结果缓存0毫秒，默认：0
+    //     convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+    //     showButton: true, //显示定位按钮，默认：true
+    //     buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
+    //     buttonOffset: new BMapGL.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+    //     showMarker: true, //定位成功后在定位到的位置显示点标记，默认：true
+    //     showCircle: true, //定位成功后用圆圈表示定位精度范围，默认：true
+    //     panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
+    //     zoomToAccuracy: true //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    // });
+    // geolocation.getCurrentPosition(function(result) {
+    //     if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+    //         point = result.point;
+    //         var myCity = new BMapGL.LocalCity({renderOptions:{map: map}});
+    //
+    //         myCity.get(function (r) {
+    //             map.panTo(r.center,r.level);
+    //
+    //         });
+    //
+    //     } else {
+    //         alert("定位失败！" + this.getStatus());
+    //     }
+    // });
+
+
+    var citys = ['南京市', '扬州市', '镇江市', '常州市', '无锡市', '苏州市', '泰州市', '淮安市',
+        '盐城市', '宿迁市', '徐州市', '连云港市', '南通市'];
+    var bdary = new BMapGL.Boundary();
+    var list = [];
+    bdary.get('江苏省', function (rs) {
+        // 绘制行政区
+        map.clearOverlays();
+        var count = rs.boundaries.length;
+        if (count === 0) {
+            alert('未能获取当前输入行政区域');
+            return;
+        }
+        var pointArray = [];
+        for (var i = 0; i < count; i++) {
+            var ply = new BMapGL.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: '#f10050'}); // 建立多边形覆盖物
+            map.addOverlay(ply);
+            pointArray = pointArray.concat(ply.getPath());
+        }
+        map.setViewport(pointArray); // 调整视野
+        // 绘制点
+        var cityGeo = new BMapGL.Geocoder();
+        for (let i = 0; i < citys.length; i++) {
+            cityGeo.getPoint(citys[i], function (point) { // 地址解析获取对应经纬度
+                var pt = new BMapGL.Point(point.lng, point.lat);
+
+                list.unshift(pt) ;
+                 console.log(list.shift());
+                var marker = new BMapGL.Marker(pt);
+                map.addOverlay(marker);
+
+                cityGeo.getLocation(pt,function (rs) {
+                    var addComp = rs.addressComponemts;
+                    var adds = "地址:"+rs.address;
+                    var expressValue ="待派件数："+i*i*100;
+                    var delilveryOlder ="派送顺序："+i;
+                    var info = adds+"\n"+expressValue+"\n"+delilveryOlder;
+                    var opts = {
+                        width : 200,     // 信息窗口宽度
+                        height: 0,     // 信息窗口高度
+                        title : citys[i++]+"分公司" , // 信息窗口标题
+                        message:""
+                    }
+                    var infoWindow = new BMapGL.InfoWindow(info, opts);  // 创建信息窗口对象
+                    marker.addEventListener("click", function(){
+                        map.openInfoWindow(infoWindow, pt); //开启信息窗口
+                    });
+
+                });
+            });
+
+        }
+    });
+
+    //将28个百度坐标点放入数据中
+    var p5 = new BMapGL.Point(119.98148471327892,31.815795653327836);
+    var p6 = new BMapGL.Point(120.59241222959322,31.303564074441766);
+    var p4 = new BMapGL.Point(120.31858328810601,31.498809732685714);
+    var p7 = new BMapGL.Point(119.9295663378548,32.4606750493083);
+    var p1 = new BMapGL.Point(118.80242172124585,32.06465288561847);
+    var p2 = new BMapGL.Point(119.41941890822997,32.40067693609037);
+    var p3 = new BMapGL.Point(119.43048944567383,32.19471592052375);
+    var p8 = new BMapGL.Point(119.02148367070623, 33.61629530103313);
+    var p9 = new BMapGL.Point(120.167544265761,33.355100917626196);
+    var p11 = new BMapGL.Point(117.29057543439453,34.21266655011306);
+    var p12 = new BMapGL.Point(120.90159173866185, 31.98654943120089);
+    var p10 = new BMapGL.Point(118.28157403570837,33.96774971569008);
+    var p13 = new BMapGL.Point(119.22862133316607,34.60224952526725);
+
+    var arrayList = [] ;
+    arrayList.unshift(p1);arrayList.unshift(p2);arrayList.unshift(p3);arrayList.unshift(p4);arrayList.unshift(p5);arrayList.unshift(p6);arrayList.unshift(p7);arrayList.unshift(p8);
+    arrayList.unshift(p9);arrayList.unshift(p10);arrayList.unshift(p11);arrayList.unshift(p12);arrayList.unshift(p13);
+   ;
+
+
+    function showPoly(pointList){
+
+        //循环显示点对象
+        for(c=0;c<pointList.length;c++){
+            var marker = new BMapGL.Marker(pointList[c]);
+            map.addOverlay(marker);
+            //将途经点按顺序添加到地图上
+            var label = new BMapGL.Label(c+1,{offset:new BMapGL.Size(20,-10)});
+            marker.setLabel(label);
+        }
+
+        var  group = Math.floor( pointList.length /11 ) ;
+        var mode = pointList.length %11 ;
+
+        var driving = new BMapGL.DrivingRoute( map, {onSearchComplete: function(results){
+                if (driving.getStatus() == BMAP_STATUS_SUCCESS){
+                    var plan = driving.getResults().getPlan(0);
+                    var  num = plan.getNumRoutes();
+                    for(var j =0;j<num ;j++){
+                        var pts= plan.getRoute(j).getPath();    //通过驾车实例，获得一系列点的数组
+                        var polyline = new BMapGL.Polyline(pts);
+                        map.addOverlay(polyline);
+                    }
+                }
+            }});
+        for(var i =0;i<group;i++){
+            var waypoints = pointList.slice(i*11+1,(i+1)*11);
+            //注意这里的终点如果是11的倍数的时候，数组可是取不到最后一位的，所以要注意终点-1喔。感谢song141的提醒，怪我太粗心大意了~
+            driving.search(pointList[i*11], pointList[(i+1)*11-1],{waypoints:waypoints});//waypoints表示途经点
+        }
+        if( mode != 0){
+            var waypoints = pointList.slice(group*11,pointList.length-1);//多出的一段单独进行search
+            driving.search(pointList[group*11],pointList[pointList.length-1],{waypoints:waypoints});
+        }
+
+    }
+     showPoly(arrayList);
+
+
+</script>
+</body>
+</html>
