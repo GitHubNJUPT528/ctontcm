@@ -1,12 +1,17 @@
 package com.cton.mapper;
 
 import com.cton.model.Role;
+import com.cton.model.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface RoleMapper {
+    List<Role> listAllRoles();
+
+    List<Role> listAllRolesByKeyword(String keyword);
+
     String selectRoleNameByRoleId(Integer roleId);
 
     Integer deleteRoleAllPermsByRoleId(Integer roleId);
@@ -15,13 +20,13 @@ public interface RoleMapper {
 
     Integer deleteRoleUserByUserIdAndRoleId(Integer userId,Integer roleId);
 
-    List selectPermsIdsByRoleId(Integer roleId);
+    List<Integer> selectPermsIdsByRoleId(Integer roleId);
 
     Integer saveRolePerms(Integer roleId, Integer permId);
 
     Integer deleteUserAllRolesByUserId(Integer userId);
 
-    List selectUserAllRolesByUserId(Integer userId);
+    List<Integer> selectUserAllRolesByUserId(Integer userId);
 
     Integer insertUserRole(Integer userId, Integer roleId);
 

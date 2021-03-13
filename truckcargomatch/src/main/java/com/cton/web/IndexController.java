@@ -3,10 +3,12 @@ package com.cton.web;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/index")
+@CrossOrigin
 @Controller
 @Api(value = "系统主页模块",tags = "系统主页接口")
 public class IndexController {
@@ -45,6 +47,6 @@ public class IndexController {
 //        int countNums = itemService.countItem(queryMap);      //总记录数
 //        PageBean<Item> pageData = new PageBean<>(currentPage, pageSize, countNums);
 //        pageData.setItems(itemsList);
-//        return pageData.getItems();  // 返回值是 PageBean<Item>
+//        return pageData;  // 返回值是 PageBean<Item>
 //    }
 }

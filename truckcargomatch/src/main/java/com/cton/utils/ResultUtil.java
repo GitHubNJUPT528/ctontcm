@@ -40,4 +40,12 @@ public class ResultUtil {
         resultDTO.setMsg(msg);
         return resultDTO;
     }
+
+    public static ResultDTO error(Integer code, String msg, Object object) {
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(code);
+        resultDTO.setMsg(msg);
+        resultDTO.setData(object);
+        return resultDTO;
+    }
 }

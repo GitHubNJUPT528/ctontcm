@@ -1,13 +1,15 @@
 package com.cton.web.user;
 
 
-import com.cton.constants.ResultDTO;
+import com.cton.enums.HttpCode;
+import com.cton.handler.BusinessException;
 import com.cton.model.User;
 import com.cton.service.user.UserService;
 import com.cton.utils.UUIDUtils;
 import com.cton.utils.VerifyCodeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -46,7 +48,7 @@ public class UserController {
 
     @ApiOperation(value = "登录",notes = "用户登录")
     @PostMapping("/login")
-    public String login(@RequestParam String username,@RequestParam String password,String code,HttpSession session){
+    public String login(@ApiParam(value = "用户名",required = true) String username, @ApiParam(value = "密码",required = true) String password,@ApiParam(value = "验证码",required = true)String code, HttpSession session){
 
 
         //比较验证码
@@ -83,18 +85,30 @@ public class UserController {
     @ApiOperation(value = "注册",notes = "用户注册")
     @PostMapping("/register")
     public String register(@RequestBody User user){
-        try {
-            ResultDTO resultDTO = userService.register(user);
-            if (resultDTO.getCode() == 1001) //注册成功
-                return "redirect:/user/loginview";
-            else
-                return "redirect:/user/registerview";
-        }catch (RuntimeException e){
-            e.printStackTrace();
-            return "redirect:/user/registerview";
+        Integer register = userService.register(user);
+        if (register>0){
+            return "redirect:/user/loginview";
         }
+        else
+            throw new BusinessException(HttpCode.DUPLICATEUSERNAME.getCode(),HttpCode.DUPLICATEUSERNAME.getMsg());
+
+//        try {
+//            ResultDTO resultDTO = userService.register(user);
+//            if (resultDTO.getCode() == 1001) //注册成功
+//                return "redirect:/user/loginview";
+//            else
+//                return "redirect:/user/registerview";
+//        }catch (RuntimeException e){
+//            e.printStackTrace();
+//            return "redirect:/user/registerview";
+//        }
     }
 
+
+
+
+
+    //下面是功能性接口
     //跳转到register请求
     @ApiOperation(value = "注册导航",notes = "跳转到用户注册页面")
     @GetMapping("/registerview")

@@ -58,8 +58,9 @@ spring:
     view:
       prefix: classpath:/templates/
   redis:
-    #host: 192.168.43.113
-    host: 47.115.5.109
+    host: 192.168.43.113
+    #host: 47.115.5.109
+    #host: 101.132.134.150
     port: 6379
     password: 123456
     database: 0

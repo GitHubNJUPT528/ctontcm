@@ -19,6 +19,22 @@
     where id = #{roleId}
   </select>
 
+  <!--查询所有角色-->
+  <select id="listAllRoles" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from u_role
+  </select>
+
+  <!--模糊查询角色-->
+  <select id="listAllRolesByKeyword" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from u_role
+    where
+        rolename like CONCAT('%',#{keyword},'%')
+  </select>
+
   <!-- 删除角色的所有权限 -->
   <delete id="deleteRoleAllPermsByRoleId">
     delete from u_role_permission where role_id=#{roleId}
@@ -66,9 +82,6 @@
   <insert id="insertUserRole">
     insert into u_user_role(user_id,role_id) values(#{userId},#{roleId})
   </insert>
-
-
-
 
   <select id="selectRoleById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
