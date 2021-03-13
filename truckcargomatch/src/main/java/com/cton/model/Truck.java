@@ -23,6 +23,9 @@ public class Truck implements Serializable {
     @ApiModelProperty("货车类型")
     private String truckType;
 
+    @ApiModelProperty("货车数量")
+    private Integer count;
+
     @ApiModelProperty("货车容量")
     private Double truckVolume;
 

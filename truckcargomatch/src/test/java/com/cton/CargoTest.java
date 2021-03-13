@@ -22,16 +22,16 @@ public class CargoTest {
     @Autowired
     private CargoService cargoService;
 
-    @Test
-    public void test3DTCM(){
-
-        List<Cargo> cargos = cargoService.listCargo();
-        for (Cargo cargo:cargos
-             ) {
-            double newMass = cargo.getMass() * 2;
-            cargo.setMass(newMass);
-            cargoService.updateByPrimaryKeySelective(cargo);
-        }
-
-    }
+//    @Test
+//    public void test3DTCM(){
+//
+//        List<Cargo> cargos = cargoService.listCargo();
+//        for (Cargo cargo:cargos
+//             ) {
+//            double newMass = cargo.getMass() * 2;
+//            cargo.setMass(newMass);
+//            cargoService.updateByPrimaryKeySelective(cargo);
+//        }
+//
+//    }
 }
